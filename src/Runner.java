@@ -15,8 +15,6 @@ public class Runner {
     public static void main(String... args) {
         String command = "";
         String choiseOfAnimal = "";
-//        AbsAnimal animal = fillAnimanlData(AnimalTypeData.CAT);
-
         do {
             System.out.println("Выберите один из пунктов меню, затем нажмите Enter");
             System.out.println("ADD");
@@ -34,42 +32,32 @@ public class Runner {
                 System.out.println("Введена неправильная команда");
                 continue;
             }
-
             CommandsData commandsData = CommandsData.valueOf(command);
-
             switch (commandsData) {
                 case ADD : {
+                    boolean isAnimalExist = false;
+                    do {
                     System.out.println("Какое животное хотите добавить?");
                     System.out.println("cat");
                     System.out.println("dog");
                     System.out.println("duck");
                     choiseOfAnimal = scanner.next().toUpperCase().trim();
+                    for (AnimalTypeData animalData: AnimalTypeData.values()){
+                        if (animalData.name().equals(choiseOfAnimal)) {
+                            isAnimalExist = true;
+                            break;
+                        }
+                    }
+                    if (!isAnimalExist) {
+                        System.out.println("Мы не можем добавить такое животное");
+                    }
+                    } while (!isAnimalExist);
+
                     AnimalTypeData animalType = AnimalTypeData.valueOf(choiseOfAnimal);
                     AbsAnimal animal = fillAnimanlData(animalType);
                     ListOfAnimal.add(animal);
                     animal.say();
-
-
-//                    switch (animalType) {
-//                        case CAT: {
-//                            animal = fillAnimanlData(AnimalTypeData.CAT);
-//                            break;
-//                        }
-//                        case DOG: {
-//                            animal = fillAnimanlData(AnimalTypeData.DOG);
-//                            break;
-//                        }
-//                        case DUCK: {
-//                            animal = fillAnimanlData(AnimalTypeData.DUCK);
-//                            break;
-//                        }
-//                        default:
-//                            System.out.println("Введенное животное не распознано");
-//                            break;
-//                    }
-
                 }
-
                 case LIST : {
                     for (AbsAnimal animal: ListOfAnimal) {
                         System.out.println(animal.toString());
@@ -78,15 +66,9 @@ public class Runner {
                 }
                 case EXIT :
                     System.exit(0);
-
             }
-
         }while (true);
-
-
-
     }
-
     private static AbsAnimal fillAnimanlData (AnimalTypeData animalTypeData) {
         AnimalFactory animalFactory = new AnimalFactory();
 
