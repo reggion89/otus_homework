@@ -2,6 +2,7 @@ import animals.AbsAnimal;
 import animals.pets.Cat;
 import com.sun.source.tree.CompoundAssignmentTree;
 import data.AnimalTypeData;
+import data.CommandsData;
 import factories.AnimalFactory;
 
 import java.util.ArrayList;
@@ -9,59 +10,79 @@ import java.util.Scanner;
 
 public class Runner {
     private static Scanner scanner = new Scanner(System.in);
+    private static ArrayList<AbsAnimal> ListOfAnimal = new ArrayList<>();
 
     public static void main(String... args) {
-        String command;
-        ArrayList<AnimalTypeData> ListOfAnimal = new ArrayList<>();
-        String choiseOfAnimal;
-        AbsAnimal animal = null;
+        String command = "";
+        String choiseOfAnimal = "";
+//        AbsAnimal animal = fillAnimanlData(AnimalTypeData.CAT);
 
         do {
             System.out.println("Выберите один из пунктов меню, затем нажмите Enter");
             System.out.println("ADD");
             System.out.println("LIST");
             System.out.println("EXIT");
+            command = scanner.next().toUpperCase().trim();
+            boolean isCommandExist = false;
+            for (CommandsData commandsData: CommandsData.values()){
+                if (commandsData.name().equals(command)) {
+                    isCommandExist = true;
+                    break;
+                }
+            }
+            if (!isCommandExist) {
+                System.out.println("Введена неправильная команда");
+                continue;
+            }
 
-            command = scanner.nextLine().toUpperCase().trim();
-            switch (command) {
-                case "ADD" : {
+            CommandsData commandsData = CommandsData.valueOf(command);
+
+            switch (commandsData) {
+                case ADD : {
                     System.out.println("Какое животное хотите добавить?");
                     System.out.println("cat");
                     System.out.println("dog");
                     System.out.println("duck");
-                    choiseOfAnimal = scanner.nextLine().toLowerCase().trim();
+                    choiseOfAnimal = scanner.next().toUpperCase().trim();
+                    AnimalTypeData animalType = AnimalTypeData.valueOf(choiseOfAnimal);
+                    AbsAnimal animal = fillAnimanlData(animalType);
+                    ListOfAnimal.add(animal);
+                    animal.say();
+
+
+//                    switch (animalType) {
+//                        case CAT: {
+//                            animal = fillAnimanlData(AnimalTypeData.CAT);
+//                            break;
+//                        }
+//                        case DOG: {
+//                            animal = fillAnimanlData(AnimalTypeData.DOG);
+//                            break;
+//                        }
+//                        case DUCK: {
+//                            animal = fillAnimanlData(AnimalTypeData.DUCK);
+//                            break;
+//                        }
+//                        default:
+//                            System.out.println("Введенное животное не распознано");
+//                            break;
+//                    }
+
                 }
-                    switch (choiseOfAnimal) {
-                        case "cat": {
-                            ListOfAnimal.add(AnimalTypeData.CAT);
-                            animal.say();
-                            break;
-                        }
-                        case "dog": {
-                            ListOfAnimal.add(AnimalTypeData.DOG);
-                            animal.say();
-                            break;
-                        }
-                        case "duck": {
-                            ListOfAnimal.add(AnimalTypeData.DUCK);
-                            animal.say();
-                            break;
-                        }
-                        default:
-                            System.out.println("Введенное животное не распознано");
-                            break;
+
+                case LIST : {
+                    for (AbsAnimal animal: ListOfAnimal) {
+                        System.out.println(animal.toString());
                     }
+                    break;
+                }
+                case EXIT :
+                    System.exit(0);
 
-
-
-//                    ListOfAnimal.add()AbsAnimal animal = fillAnimanlData(AnimalTypeData.CAT);
-                case "LIST" :
             }
 
         }while (true);
 
-
-//        AbsAnimal animal = fillAnimanlData(AnimalTypeData.CAT);
 
 
     }
