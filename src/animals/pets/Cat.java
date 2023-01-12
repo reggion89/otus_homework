@@ -6,6 +6,6 @@ public class Cat extends AbsAnimal {
 
     @Override
     public String say() {
-        return String.format("Мяу");
+        return String.format("МяуМяу");
     }
 }
