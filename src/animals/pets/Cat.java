@@ -6,7 +6,7 @@ public class Cat extends AbsAnimal {
 
     @Override
     public String say() {
-        System.out.println("Гав");
+        System.out.println("Мяу");
         return null;
     }
 }
