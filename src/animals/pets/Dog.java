@@ -6,6 +6,7 @@ public class Dog extends AbsAnimal {
 
     @Override
     public String say() {
-        return String.format("Гав");
+        System.out.println("Гав");
+        return null;
     }
 }
