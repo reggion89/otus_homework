@@ -36,7 +36,8 @@ public abstract class AbsAnimal {
     }
 
     public String say() {
-        return String.format("Я говорю");
+        System.out.println("Я говорю");
+        return null;
     }
 
     public void go()   {
